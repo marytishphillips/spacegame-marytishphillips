@@ -36,8 +36,8 @@ class Volume(private var lit:Double = 0.0) {
   def quarts():Double = lit * 1.0567
   def pints():Double = lit * 2.11338
   def cups():Double = lit * 4.16667
-  def teaspoons():Double = lit * 168.936
-  def tablespoons():Double = lit * 56.3121
+  def teaspoons():Double = lit * 202.884
+  def tablespoons():Double = lit * 67.628
 }
 
 object Volume {
