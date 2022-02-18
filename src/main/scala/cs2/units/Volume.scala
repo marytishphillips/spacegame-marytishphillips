@@ -58,6 +58,9 @@ object Volume {
   def main(args:Array[String]):Unit = {
     val x = Volume(4.0)
     println(x.gallons())
+    println(x.pints())
+    println(teaspoons(4).lit)
+    println(gallons(4).lit)
   }
 }
 

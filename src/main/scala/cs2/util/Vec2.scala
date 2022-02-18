@@ -61,7 +61,7 @@ object Vec2 {
     val v1 = Vec2(29.4241, 98.4936)
     val v2 = Vec2(30.2672, 97.7431)
 
-    val slope:Double = ((v2.y - v1.y)/(v2.y - v1.y))
+    val slope:Double = ((v2.y - v1.y)/(v2.x - v1.x))
     val b:Double = (v1.y - (slope * v1.x))
     val newx:Double = (((v2.x - v1.x) / 3) * 8 + v1.x)
     val newy:Double = (slope * newx) + b
