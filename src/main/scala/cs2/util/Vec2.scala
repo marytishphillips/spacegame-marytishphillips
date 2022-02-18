@@ -57,13 +57,15 @@ object Vec2 {
   def apply(toCopy:Vec2):Vec2 = { new Vec2(toCopy.x, toCopy.y) }
   def apply():Vec2 = { new Vec2(0, 0) }
 
-  def main(args:Array[String]):Unit = {
+  def main(args:Array[String]) = {
     val v1 = Vec2(29.4241, 98.4936)
     val v2 = Vec2(30.2672, 97.7431)
 
-    val newx = ()
-    val newy = (((v1.y - v2.y)/(v1.x - v2.x)))
-    println("The drone will be at degrees latitude and degrees longitude." )
+    val slope:Double = ((v2.y - v1.y)/(v2.y - v1.y))
+    val b:Double = (v1.y - (slope * v1.x))
+    val newx:Double = (((v2.x - v1.x) / 3) * 8 + v1.x)
+    val newy:Double = (slope * newx) + b
+    println("The drone will be at " + newx + " degrees latitude and " + newy + " degrees longitude." )
     /** Your solution to the physics problem described should be calculated here.
      *  Remember to print out your answer using println.
      */
