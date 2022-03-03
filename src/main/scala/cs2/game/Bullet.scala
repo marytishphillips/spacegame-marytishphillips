@@ -17,6 +17,8 @@ class Bullet(pic:Image, initPos:Vec2, private var vel:Vec2) extends Sprite(pic, 
    * 
    *  @return none/Unit
    */
-  def timeStep():Unit = { }
-  
+  def timeStep():Unit = {
+    pos.x += vel.x
+    pos.y += vel.y
+  }
 }
