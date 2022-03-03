@@ -20,6 +20,7 @@ class Player(avatar:Image, initPos:Vec2, private val bulletPic:Image) extends Sp
    *  @return none/Unit
    */
   def moveLeft():Unit = {
+    //insert an if statement to check if inbounds
     pos.x -= 1
   }
 
@@ -28,6 +29,7 @@ class Player(avatar:Image, initPos:Vec2, private val bulletPic:Image) extends Sp
    *  @return none/Unit
    */
   def moveRight():Unit = {
+    //insert an if statement to check if inbounds
     pos.x += 1 
   }
 
