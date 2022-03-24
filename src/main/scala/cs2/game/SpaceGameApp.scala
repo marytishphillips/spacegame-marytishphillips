@@ -34,15 +34,15 @@ object SpaceGameApp extends JFXApp {
           val enemyImgPath = getClass().getResource("/images/Enemy.png")
           val enemyImg = new Image(enemyImgPath.toString)
 
-          //val enemyy = new Enemy(enemyImg, new Vec2(400,100), bullImg)
+          
           var es = new EnemySwarm(6,3)
           val pl = new Player(playImg, new Vec2(350,500), playBullImg)
           val bl = new Bullet(bullImg, new Vec2(350,500), new Vec2(0,10))
           var bulletList= Buffer[Bullet]() 
-          var enemyBullList= Buffer[Bullet]() //originally a list
-          val keySet = scala.collection.mutable.Set[KeyCode]() //added
-          var count = 0 //added
-          var bulletCount = 0 //added
+          var enemyBullList= Buffer[Bullet]() 
+          val keySet = scala.collection.mutable.Set[KeyCode]() 
+          var count = 0 
+          var bulletCount = 0 
 
           val timer = AnimationTimer(t => {
               g.drawImage(backImg, 0,0, width.value,height.value)
@@ -51,24 +51,24 @@ object SpaceGameApp extends JFXApp {
               if(es.swarm.length == 0) es = new EnemySwarm(6,3) 
               es.display(g)
 
-              for(x <- bulletList) { //displays bullets
+              for(x <- bulletList) { 
                 x.display(g)
                 x.timeStep()
               }
 
-              if (count % 45 == 0) { //slows enemy bullet fire
+              if (count % 45 == 0) { 
                 enemyBullList += es.shoot()
                 count += 1
               }
               else count += 1
 
               var k:Int = 0
-              while (k < enemyBullList.length) { //for removing bullet when out of bounds
+              while (k < enemyBullList.length) { 
                 if (enemyBullList(k).bulletPositionY() > 750) enemyBullList.remove(k)
                 else k += 1
               }
               
-              for (y <- enemyBullList) { //displays bullets
+              for (y <- enemyBullList) { 
                   y.display(g)
                   y.timeStep()
               }
@@ -98,7 +98,7 @@ object SpaceGameApp extends JFXApp {
               var enemyBullDelete:List[Bullet] = List()
               var enemyDelete:List[Enemy] = List()
 
-              for (b <- enemyBullList) { //player intersects with enemy bullet
+              for (b <- enemyBullList) { 
                   if (pl.intersection(b, b.bulletImgSize, b.bulletImgSize)) { 
                     pl.playerUpdate(350, 500)
                     enemyBullDelete ::= b
@@ -106,7 +106,7 @@ object SpaceGameApp extends JFXApp {
               }
               
               for (h <- bulletList) {
-                for (b <- enemyBullList) { //player bullet intersects with enemy bullet
+                for (b <- enemyBullList) { 
                   if (h.intersection(b, b.bulletImgSize, b.bulletImgSize)) { 
                     bullDelete ::= h
                     enemyBullDelete ::= b
@@ -114,11 +114,11 @@ object SpaceGameApp extends JFXApp {
                 }
               }
 
-              for (j <- es.swarm) { //player intesects with enemy
+              for (j <- es.swarm) { 
                 if (pl.intersection(j, j.enemyImgSize, j.enemyImgSize - 75)) pl.playerUpdate(350, 500) 
               }
 
-              for (b <- es.swarm) { //player intesects with enemy
+              for (b <- es.swarm) { 
                 for (u <- bulletList) {
                   if (b.intersection(u, u.bulletImgSize, u.bulletImgSize)) {
                     enemyDelete ::= b
