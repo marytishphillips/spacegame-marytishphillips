@@ -13,6 +13,14 @@ class Player(avatar:Image, initPos:Vec2, private val bulletPic:Image) extends Sp
     if(pos.x < 650) { pos.x += 10 }
   }
 
+  def moveDown():Unit = {
+    if(pos.y < 550) { pos.y += 10 }
+  }
+
+  def moveUp():Unit = {
+    if(pos.y > 50) { pos.y -= 10}
+  }
+
   def shoot():Bullet = {
     val pb = new Bullet(bulletPic, pos, Vec2(3,4))
     pb
@@ -20,8 +28,15 @@ class Player(avatar:Image, initPos:Vec2, private val bulletPic:Image) extends Sp
   def playerPosition():Vec2 = {
     new Vec2(pos.x,pos.y)
   }
-  override def display(g:GraphicsContext):Unit = {
-    g.drawImage(avatar,pos.x, pos.y, 150, 200)
+  def playerUpdate(q:Int, d:Int):Unit = {
+    pos.x = q
+    pos.y = d
   }
+  val playerSizeX = 150
+  val playerSizeY = 200
+  override def display(g:GraphicsContext):Unit = {
+    g.drawImage(avatar,pos.x, pos.y, playerSizeX, playerSizeY)
+  }
+  
 
 }

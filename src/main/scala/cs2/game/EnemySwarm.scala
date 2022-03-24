@@ -5,16 +5,17 @@ import scalafx.scene.layout.GridPane
 import scalafx.scene.layout.VBox
 import scalafx.scene.image.Image
 import scala.util.Random
+import scala.collection.mutable.Buffer
 
-class EnemySwarm(val nRows:Int, val nCols:Int) {
+class EnemySwarm(val nRows:Int, val nCols:Int){
   val bullImgPath = getClass().getResource("/images/Bullet.png")
   val bullImg = new Image(bullImgPath.toString)
   val enemyImgPath = getClass().getResource("/images/Enemy.png")
   val enemyImg = new Image(enemyImgPath.toString)
-  var swarm = List[Enemy]()
+  var swarm = Buffer[Enemy]()
   for(x <- 0 to nRows) {
       for(y <- 0 to nCols) {
-        swarm ::= new Enemy(enemyImg,new Vec2((x*100)+70,(y*100)+30),bullImg)
+        swarm += new Enemy(enemyImg,new Vec2((x*100)+70,(y*100)+30),bullImg)
       }
     }
   def display(g:GraphicsContext):Unit = {

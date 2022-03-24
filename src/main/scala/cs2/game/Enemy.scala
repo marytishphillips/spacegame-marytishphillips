@@ -10,8 +10,9 @@ class Enemy(pic:Image, initPos:Vec2, private val bulletPic:Image) extends Sprite
     val b = new Bullet(bulletPic, pos, new Vec2(0,5))
     b
   }
+  val enemyImgSize = 100
   override def display(g:GraphicsContext):Unit = {
-    g.drawImage(img,pos.x, pos.y, 100, 100)
+    g.drawImage(img,pos.x, pos.y, enemyImgSize, enemyImgSize)
   }
 
   def enemyPosition():Vec2 = {
