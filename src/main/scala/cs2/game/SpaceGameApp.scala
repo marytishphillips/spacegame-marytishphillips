@@ -63,6 +63,8 @@ object SpaceGameApp extends JFXApp {
           var starterPage = true
           var playerLives = 4
           var playerScore = 0 
+          var isinRangeXX = true
+          var isinRangeYY = true
 
           val timer = AnimationTimer(t => {
             g.drawImage(backImg, 0,0, width.value,height.value)   
@@ -75,7 +77,9 @@ object SpaceGameApp extends JFXApp {
                 if(s == KeyCode.Y) { 
                   starterPage = false 
                   playerLives = 4
-                  es = new EnemySwarm(6,3)
+                  es = new EnemySwarm(6,1)
+                  var isinRangeXX = true
+                  var isinRangeYY = true //
                 }
               }
             }
@@ -92,7 +96,9 @@ object SpaceGameApp extends JFXApp {
                   playerLives = 4
                   playerScore = 0 //added
                   bulletList.clear()
-                  es = new EnemySwarm(6,3)
+                  es = new EnemySwarm(6,1)
+                  var isinRangeXX = true
+                  var isinRangeYY = true
                 }
               }
             }
@@ -102,9 +108,21 @@ object SpaceGameApp extends JFXApp {
               g.fillText("Player Lives Remaining: " + playerLives + " / 4" , 450, 40)
               g.fillText("Score: " + playerScore, 5, 40)
               pl.display(g)
-              if(es.swarm.length == 0) es = new EnemySwarm(6,3)
+              if(es.swarm.length == 0) {
+                es = new EnemySwarm(6,1)
+                var isinRangeXX = true
+                var isinRangeYY = true
+              } 
               es.display(g)
-
+            
+              
+              for (m <- es.swarm) {
+                m.enemyTimeStepX(isinRangeXX)
+                isinRangeXX = m.enemyTimeStepX(isinRangeXX)
+                m.enemyTimeStepY(isinRangeYY)
+                isinRangeYY = m.enemyTimeStepY(isinRangeYY)
+              }
+                
               for(x <- bulletList) { 
                 x.display(g)
                 x.timeStep()
@@ -126,7 +144,12 @@ object SpaceGameApp extends JFXApp {
                   y.display(g)
                   y.timeStep()
               }
-              
+
+              var leftAlready = false
+              var rightAlready = false
+              var upAlready = false
+              var downAlready = false
+
               for (e <- keySet) {
                 if(e == KeyCode.Space) {
                   if (bulletCount % 25 == 0) {
@@ -135,17 +158,21 @@ object SpaceGameApp extends JFXApp {
                   }
                   else bulletCount += 1
                 } 
-                else if (e == KeyCode.Left || e == KeyCode.A) {
-                  pl.moveLeft() 
+                else if (e == KeyCode.Left || e == KeyCode.A && leftAlready == false) {
+                  pl.moveLeft()
+                  leftAlready = true 
                 }
-                else if (e == KeyCode.Right || e == KeyCode.D) {
+                else if (e == KeyCode.Right || e == KeyCode.D && rightAlready == false) {
                   pl.moveRight()
+                  rightAlready = true
                 } 
-                else if (e == KeyCode.Up || e == KeyCode.W) {
+                else if (e == KeyCode.Up || e == KeyCode.W && upAlready == false) {
                   pl.moveUp()
+                  upAlready = true
                 }
-                else if (e == KeyCode.Down || e == KeyCode.S) {
+                else if (e == KeyCode.Down || e == KeyCode.S && downAlready == false) {
                   pl.moveDown()
+                  downAlready = true
                 }
               }
               var bullDelete:List[Bullet] = List()
