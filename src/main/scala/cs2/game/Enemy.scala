@@ -10,24 +10,6 @@ class Enemy(pic:Image, initPos:Vec2, private val bulletPic:Image) extends Sprite
     val b = new Bullet(bulletPic, pos, new Vec2(0,5))
     b
   }
- /* def enemyTimeStep(inRange:Boolean):Boolean ={ 
-    var r = scala.util.Random
-    var returnval = true 
-      if (inRange == true) {
-        pos.x += r.nextInt(2)
-        pos.y += r.nextInt(3)
-      }
-      else {
-        pos.x -= r.nextInt(2)
-        pos.y -= r.nextInt(3)
-      }
-      //counter += 1
-      if (pos.y > 300) returnval = false
-      if (pos.y < 10) returnval = true
-      if (pos.x > 650) returnval = false
-      if (pos.x < 10) returnval = true //pos.x = 10 + r.nextInt(600)
-      returnval
-  } */
 
   def enemyTimeStepX(inRangeX:Boolean):Boolean ={ 
     var r = scala.util.Random

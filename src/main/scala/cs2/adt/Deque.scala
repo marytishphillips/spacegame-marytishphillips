@@ -11,5 +11,5 @@ abstract class Deque[A] {
 }
 
 object Deque {
- //   def apply[A : Manifest]():Deque[A] = new TheDeque[A]()
+   def apply[A : Manifest]():Deque[A] = new TheDeque[A]()
 }

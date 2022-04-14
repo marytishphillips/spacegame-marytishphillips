@@ -69,7 +69,7 @@ object SpaceGameApp extends JFXApp {
           val timer = AnimationTimer(t => {
             g.drawImage(backImg, 0,0, width.value,height.value)   
             if (starterPage == true) { 
-              playerScore = 0 //added
+              playerScore = 0 
               g.drawImage(titleImg, 2,100, 800, 200)
               g.drawImage(keyImg, 125, 300)
               g.drawImage(creatorImg, 500,700)
@@ -79,7 +79,7 @@ object SpaceGameApp extends JFXApp {
                   playerLives = 4
                   es = new EnemySwarm(6,1)
                   var isinRangeXX = true
-                  var isinRangeYY = true //
+                  var isinRangeYY = true 
                 }
               }
             }
@@ -94,7 +94,7 @@ object SpaceGameApp extends JFXApp {
                 if (s == KeyCode.X) starterPage = true 
                 else if (s == KeyCode.R) {
                   playerLives = 4
-                  playerScore = 0 //added
+                  playerScore = 0 
                   bulletList.clear()
                   es = new EnemySwarm(6,1)
                   var isinRangeXX = true
