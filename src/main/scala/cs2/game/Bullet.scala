@@ -10,6 +10,10 @@ class Bullet(pic:Image, initPos:Vec2, private var vel:Vec2) extends Sprite(pic, 
     pos.y += vel.y
   }
 
+  override def clone():Bullet = {
+    new Bullet(img, new Vec2(pos.x, pos.y), new Vec2(vel.x, vel.y))
+  }
+
   val bulletImgSize = 50
   override def display(g:GraphicsContext):Unit = {
     g.drawImage(img,pos.x, pos.y, bulletImgSize, bulletImgSize)

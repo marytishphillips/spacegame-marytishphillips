@@ -32,6 +32,9 @@ class Player(avatar:Image, initPos:Vec2, private val bulletPic:Image) extends Sp
     pos.x = q
     pos.y = d
   }
+  override def clone():Player = {
+    new Player(avatar, new Vec2(pos.x,pos.y), bulletPic)
+  }
   val playerSizeX = 150
   val playerSizeY = 200
   override def display(g:GraphicsContext):Unit = {

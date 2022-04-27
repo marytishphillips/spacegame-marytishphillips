@@ -43,9 +43,15 @@ class Enemy(pic:Image, initPos:Vec2, private val bulletPic:Image) extends Sprite
   override def display(g:GraphicsContext):Unit = {
     g.drawImage(img,pos.x, pos.y, enemyImgSize, enemyImgSize) //changed
   }
-
+  override def clone():Enemy = {
+    new Enemy(pic, new Vec2(pos.x,pos.y), bulletPic)
+  }
   def enemyPosition():Vec2 = {
     new Vec2(pos.x, pos.y)
+  }
+  def enemyUpdate(q:Int, d:Int):Unit = {
+    pos.x = q
+    pos.y = d
   }
 
 }
