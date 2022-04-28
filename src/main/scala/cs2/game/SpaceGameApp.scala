@@ -203,7 +203,7 @@ object SpaceGameApp extends JFXApp {
               // Run Game As Normal
               if (isReversing == false) {
 
-                //Enemy Swarm Movement
+                // Enemy Swarm Movement
                 for (m <- es.swarm) {
                 m.enemyTimeStepX(isinRangeXX)
                 isinRangeXX = m.enemyTimeStepX(isinRangeXX)
@@ -211,13 +211,13 @@ object SpaceGameApp extends JFXApp {
                 isinRangeYY = m.enemyTimeStepY(isinRangeYY)
                 }
 
-                //Bullet Display
+                // Bullet Display
                 for(x <- bulletList) { 
                   x.display(g)
                   x.timeStep()
                 }
 
-                //Random Enemy Fire
+                // Random Enemy Fire
                 if (count % 45 == 0) { 
                   enemyBullList += es.shoot()
                   count += 1
@@ -283,14 +283,14 @@ object SpaceGameApp extends JFXApp {
                   enemyBullList -= t 
                 }
 
-                //Push To Stack & Move Stack Memory Bar
+                // Push To Stack & Move Stack Memory Bar
                 pushToStack()
                 rectFillValX += 0.1
               }
 
               else {
 
-                //If isReversing == True, Still Display Bullets.
+                // If isReversing == True, Still Display Bullets.
                 for (y <- enemyBullList) { 
                   y.display(g)
                 }

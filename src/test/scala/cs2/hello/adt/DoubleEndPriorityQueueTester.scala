@@ -20,7 +20,7 @@ class DoubleEndPriorityQueueTester {
     assertTrue(!d.isEmpty())
   }
 
-  @Test def madMinTest():Unit = {
+  @Test def minMax1Test():Unit = {
       assertTrue(d.isEmpty())
       d.add(3)
       d.add(9)

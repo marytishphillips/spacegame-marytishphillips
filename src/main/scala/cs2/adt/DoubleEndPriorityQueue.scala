@@ -1,5 +1,7 @@
 package cs2.adt
 
+//Tester Code at /Users/marytishphillips/cs2hw-s22-marytishphillips/src/test/scala/cs2/hello/adt/DoubleEndPriorityQueueTester.scala
+
 abstract class DoubleEndPriorityQueue[A <% Ordered[A]] {
   def isEmpty():Boolean //Return true if there are no elements in the DEPQ
   def add(elem: A):Unit //Add an element to the DEPQ

@@ -20,7 +20,6 @@ abstract class Sprite (protected val img:Image, protected var pos:Vec2) {
     g.drawImage(img,pos.x, pos.y)
   }
 
-  
   def intersection (other:Sprite, imgSizeX:Int, imgSizeY:Int):Boolean = {
     val u1 = pos.y 
     val d1 = pos.y + imgSizeY

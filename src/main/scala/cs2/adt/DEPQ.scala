@@ -1,5 +1,7 @@
 package cs2.adt
 
+//Tester Code at /Users/marytishphillips/cs2hw-s22-marytishphillips/src/test/scala/cs2/hello/adt/DoubleEndPriorityQueueTester.scala
+
 class DEPQ[A <% Ordered[A]] extends DoubleEndPriorityQueue[A] {
   private class Node(var data:A, var prev:Node, var next:Node)
   private var head:Node = null
@@ -8,6 +10,7 @@ class DEPQ[A <% Ordered[A]] extends DoubleEndPriorityQueue[A] {
   def isEmpty():Boolean = {
     if (head == null && tail == null) true else false
   }
+
   def add(elem: A):Unit = {
     if (head == null) {
       head = new Node(elem, null, head)
@@ -30,6 +33,7 @@ class DEPQ[A <% Ordered[A]] extends DoubleEndPriorityQueue[A] {
   }
 
   def peekMax():A = head.data
+
   def max():A = {
     var ret:A = head.data
     if (head.next == tail) {
@@ -48,29 +52,15 @@ class DEPQ[A <% Ordered[A]] extends DoubleEndPriorityQueue[A] {
     ret
   }
     
-    /*var ret:A = head.data
-    if (head != null) {
-      var ret = head.data
-      val headd = head.next
-      head = headd
-      if(head.next != null) {
-        val headdd = head.next.next
-        head.next = headdd
-      }
-      if (head == null) tail = null
-    }
-    ret*/
-    /*var returnHead = head.data
-    head = head.next
-    returnHead*/
   def peekMin():A = tail.data
+
   def min():A = {
     var ret:A = tail.data
     if (tail.prev == head) {
       tail = tail.prev
       tail.prev = null
     }
-    else if (head.data == tail.data) { //tail.prev == null &&
+    else if (head.data == tail.data) { 
       tail = null
       head = null
     }
@@ -81,16 +71,4 @@ class DEPQ[A <% Ordered[A]] extends DoubleEndPriorityQueue[A] {
     }
     ret
   }
-    /*val ret = tail.data
-    val previ = tail.prev
-    val prevvi = tail.prev.prev
-    tail = tail.prev
-    tail.prev = prevvi
-    tail.next = null
-    ret*/
-    /*var returnTail = tail.data
-   // if (tail.prev != null) {
-      tail = tail.prev
-   // }
-    returnTail*/
 }

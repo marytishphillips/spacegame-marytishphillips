@@ -41,7 +41,7 @@ class Enemy(pic:Image, initPos:Vec2, private val bulletPic:Image) extends Sprite
   }
   val enemyImgSize = 100
   override def display(g:GraphicsContext):Unit = {
-    g.drawImage(img,pos.x, pos.y, enemyImgSize, enemyImgSize) //changed
+    g.drawImage(img,pos.x, pos.y, enemyImgSize, enemyImgSize)
   }
   override def clone():Enemy = {
     new Enemy(pic, new Vec2(pos.x,pos.y), bulletPic)

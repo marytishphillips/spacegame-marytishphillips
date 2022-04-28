@@ -13,11 +13,13 @@ class EnemySwarm(val nRows:Int, val nCols:Int){
   val enemyImgPath = getClass().getResource("/images/Enemy.png")
   val enemyImg = new Image(enemyImgPath.toString)
   var swarm = Buffer[Enemy]()
+
   for(x <- 0 to nRows) {
-      for(y <- 0 to nCols) {
-        swarm += new Enemy(enemyImg,new Vec2((x*100)+70,(y*100)+30),bullImg)
-      }
+    for(y <- 0 to nCols) {
+      swarm += new Enemy(enemyImg,new Vec2((x*100)+70,(y*100)+30),bullImg)
     }
+  }
+
   def display(g:GraphicsContext):Unit = {
     for (m <- swarm) {
       m.display(g)
