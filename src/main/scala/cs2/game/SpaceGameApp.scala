@@ -82,8 +82,8 @@ object SpaceGameApp extends JFXApp {
             var cloneLives = playerLives
             var clonePlayerBulletBuffer = bulletList.map(_.clone())
             var cloneEnemyBulletBuffer = enemyBullList.map(_.clone())
-            var cloneEnemySwarm = es.swarm.map(_.clone)
-            rewindStack.push(new GameState(pl.playerPosition().clone(), es.swarm.clone(), clonePlayerBulletBuffer, cloneEnemyBulletBuffer, cloneScore, cloneLives))
+            var cloneEnemySwarm = es.swarm.map(_.clone) // change made below 
+            rewindStack.push(new GameState(pl.playerPosition().clone(), cloneEnemySwarm, clonePlayerBulletBuffer, cloneEnemyBulletBuffer, cloneScore, cloneLives))
           }
 
           // Animation Timer
@@ -111,7 +111,8 @@ object SpaceGameApp extends JFXApp {
             }
 
             // Game Over & Restart Game
-            else if (playerLives == 0) { 
+            else if (playerLives == 0) {
+              rewindStack = new LinkedStack[GameState]
               g.drawImage(gameOverImg, 140, 100, 500, 200)
               g.drawImage(finalScoreImg, 160, 300)
               g.setFill(Color.White)
@@ -121,7 +122,7 @@ object SpaceGameApp extends JFXApp {
 
               for(s <- keySet) {
                 if (s == KeyCode.X) starterPage = true 
-                else if (s == KeyCode.R) {
+                else if (s == KeyCode.P) {
                   playerLives = 4
                   playerScore = 0 
                   bulletList.clear()
@@ -141,7 +142,10 @@ object SpaceGameApp extends JFXApp {
               g.fillText("Player Lives Remaining: " + playerLives + " / 4" , 450, 40)
               g.fillText("Score: " + playerScore, 5, 40)
               g.fillText("Rewind Memory Available: ", 5, 770)
-              g.setFill(Color.Aquamarine)
+              g.font = new Font("Impact", 20)
+              g.setFill(Color.LightPink)
+              g.fillText("Press 'R' To Rewind Game", 5, 790)
+              g.setFill(Color.Turquoise)
               g.fillRect(340, 740, rectFillValX, 40)
               pl.display(g)
 
@@ -285,7 +289,7 @@ object SpaceGameApp extends JFXApp {
               }
 
               else {
-                
+
                 //If isReversing == True, Still Display Bullets.
                 for (y <- enemyBullList) { 
                   y.display(g)
@@ -301,12 +305,12 @@ object SpaceGameApp extends JFXApp {
           
           // Add & Remove Keys
           canvas.onKeyPressed = (w:KeyEvent) => {
-            if(w.code == KeyCode.Space || w.code == KeyCode.S|| w.code == KeyCode.Left || w.code == KeyCode.Right || w.code == KeyCode.Up || w.code == KeyCode.Down || w.code == KeyCode.W || w.code == KeyCode.A || w.code == KeyCode.R || w.code == KeyCode.D|| w.code == KeyCode.X|| w.code == KeyCode.Y|| w.code == KeyCode.R) {
+            if(w.code == KeyCode.Space || w.code == KeyCode.S|| w.code == KeyCode.Left || w.code == KeyCode.Right || w.code == KeyCode.Up || w.code == KeyCode.Down || w.code == KeyCode.W || w.code == KeyCode.A || w.code == KeyCode.R || w.code == KeyCode.D|| w.code == KeyCode.X|| w.code == KeyCode.Y|| w.code == KeyCode.P) {
               keySet.add(w.code)
             }
           }
           canvas.onKeyReleased = (c:KeyEvent) => {
-            if(c.code == KeyCode.Space || c.code == KeyCode.S || c.code == KeyCode.Left || c.code == KeyCode.Right || c.code  == KeyCode.Up || c.code == KeyCode.Down|| c.code == KeyCode.W || c.code == KeyCode.A || c.code == KeyCode.R || c.code == KeyCode.D|| c.code == KeyCode.X|| c.code == KeyCode.Y|| c.code == KeyCode.R) {
+            if(c.code == KeyCode.Space || c.code == KeyCode.S || c.code == KeyCode.Left || c.code == KeyCode.Right || c.code  == KeyCode.Up || c.code == KeyCode.Down|| c.code == KeyCode.W || c.code == KeyCode.A || c.code == KeyCode.R || c.code == KeyCode.D|| c.code == KeyCode.X|| c.code == KeyCode.Y|| c.code == KeyCode.P) {
               keySet.remove(c.code)
             }
             if(c.code == KeyCode.Space) bulletCount = 0
