@@ -1,5 +1,6 @@
 package cs2.game
 import cs2.util.Vec2
+import cs2.adt.TheDeque
 
 import scalafx.Includes._
 import scalafx.application.JFXApp
@@ -59,15 +60,24 @@ object SpaceGameApp extends JFXApp {
           val finalScoreImg = new Image(finalScoreImgPath.toString)
           val gameOverImgPath = getClass().getResource("/images/gameOver.png")
           val gameOverImg = new Image(gameOverImgPath.toString)
-          
+          val pinkCloudImgPath = getClass().getResource("/images/PinkCloud.png")
+          val pinkCloudImg = new Image(pinkCloudImgPath.toString)
+          val orangeCloudImgPath = getClass().getResource("/images/OrangeCloud.png")
+          val orangeCloudImg = new Image(orangeCloudImgPath.toString)
+          val mountainImgPath = getClass().getResource("/images/Mountain.png")
+          val mountainImg = new Image(mountainImgPath.toString)
+          var backgrndImage = new Background (backImg, new Vec2 (800,800), new Vec2 (0,0), new Vec2 (20,20))
 
           // Game Fields
           var es = new EnemySwarm(6,3)
           val pl = new Player(playImg, new Vec2(350,500), playBullImg)
           val bl = new Bullet(bullImg, new Vec2(350,500), new Vec2(0,10))
           var bulletList= Buffer[Bullet]() 
-          var enemyBullList= Buffer[Bullet]() 
-          val keySet = scala.collection.mutable.Set[KeyCode]() 
+          var enemyBullList= Buffer[Bullet]()
+          var bossBulletToDisplay = Buffer[Bullet]()
+          var bossMoves = new TheDeque[Char]
+          var bossBullets = new TheDeque[Bullet]
+          var keySet = scala.collection.mutable.Set[KeyCode]() 
           var count = 0 
           var bulletCount = 0 
           var starterPage = true
@@ -81,6 +91,7 @@ object SpaceGameApp extends JFXApp {
           var isBoss = false
           var boss:Enemy = new Enemy(bossImg, new Vec2 (350,200), bullImg)
           var bossLives = 3
+          
 
           // Push To Stack Method
           def pushToStack ():Unit = {
@@ -100,7 +111,17 @@ object SpaceGameApp extends JFXApp {
           // Animation Timer
           val timer = AnimationTimer(t => {
 
-            g.drawImage(backImg, 0,0, width.value,height.value) 
+            //var backgrndImage = new Background (backImg, new Vec2 (800,800), new Vec2 (0,0), new Vec2 (10,10))
+            //backgrndImage.timeStep()
+            //backgrndImage.move(new Vec2(30,20))
+            backgrndImage.display(g)
+            //backgrndImage.move(new Vec2(30,20))
+            //g.drawImage(backImg, 0,0, width.value,height.value)
+            g.drawImage(pinkCloudImg,100, 50, 500, 350) 
+            g.drawImage(orangeCloudImg, 300, 50, 500, 350)
+            g.drawImage(pinkCloudImg,700, 50, 500, 350) 
+            g.drawImage(orangeCloudImg, 0, 50, 500, 350)
+            g.drawImage(mountainImg, 0, 200, 800, 600)
 
             // Starter Page
             if (starterPage == true) { 
@@ -171,7 +192,6 @@ object SpaceGameApp extends JFXApp {
               pl.display(g)
 
               if (isBoss == true) {
-                //boss = new Enemy(bossImg, new Vec2 (350,200), bullImg) //error here
                 boss.display(g)
               }
 
@@ -199,27 +219,28 @@ object SpaceGameApp extends JFXApp {
                   if (bulletCount % 25 == 0) {
                     bulletList += new Bullet(playBullImg, pl.playerPosition(), new Vec2(0,-5))
                     bulletCount += 1
+                    if (isBoss == true) bossBullets.append(new Bullet (bullImg, boss.enemyPosition(), new Vec2 (0, 5)))
                   }
                   else bulletCount += 1
                 } 
                 else if (e == KeyCode.Left || e == KeyCode.A && leftAlready == false) {
                   pl.moveLeft()
-                  if (isBoss == true) { boss.moveLeft() }  // Does not currently function as intended
+                  if (isBoss == true) bossMoves.append('L')  // Does not currently function as intended
                   leftAlready = true 
                 }
                 else if (e == KeyCode.Right || e == KeyCode.D && rightAlready == false) {
                   pl.moveRight()
-                  if (isBoss == true) boss.moveRight() // Does not currently function as intended
+                  if (isBoss == true) bossMoves.append('R') // Does not currently function as intended
                   rightAlready = true
                 } 
                 else if (e == KeyCode.Up || e == KeyCode.W && upAlready == false) {
                   pl.moveUp()
-                  if (isBoss == true) boss.moveDown() // Does not currently function as intended
+                  if (isBoss == true) bossMoves.append('D') // Does not currently function as intended
                   upAlready = true
                 }
                 else if (e == KeyCode.Down || e == KeyCode.S && downAlready == false) {
                   pl.moveDown()
-                  if (isBoss == true) boss.moveUp() // Does not currently function as intended
+                  if (isBoss == true) bossMoves.append('U') // Does not currently function as intended
                   downAlready = true
                 }
                 else if(e ==KeyCode.R && !rewindStack.isEmpty()) {
@@ -234,6 +255,7 @@ object SpaceGameApp extends JFXApp {
                   rectFillValX -= 0.1
                 }
               }
+              
 
               // Run Game As Normal
               if (isReversing == false) {
@@ -250,6 +272,24 @@ object SpaceGameApp extends JFXApp {
                 for(x <- bulletList) { 
                   x.display(g)
                   x.timeStep()
+                }
+
+                // Boss Bullet Display
+                if (!bossBullets.isEmpty()) {
+                  bossBulletToDisplay += bossBullets.front()
+                }
+                if (bulletCount % 50 == 0) {
+                  for (b <- bossBulletToDisplay) {
+                    b.display(g)
+                    b.timeStep()
+                  }
+                }
+                if (!bossMoves.isEmpty()) {
+                  var move:Char = bossMoves.front()
+                  if (move == 'L') boss.moveLeft()
+                  else if (move == 'R') boss.moveRight()
+                  else if (move == 'D') boss.moveDown()
+                  else boss.moveUp()
                 }
 
                 // Random Enemy Fire
@@ -269,11 +309,6 @@ object SpaceGameApp extends JFXApp {
                   y.display(g)
                   y.timeStep()
                 }
-                // Random Boss Fire
-                if (count % 100 == 0 && isBoss == true) {
-                  enemyBullList += boss.shoot()
-                  count += 1
-                }
 
                 // Intersections
                 var bullDelete:List[Bullet] = List()
@@ -283,6 +318,8 @@ object SpaceGameApp extends JFXApp {
                 for (b <- enemyBullList) { 
                   if (pl.intersection(b, b.bulletImgSize, b.bulletImgSize)) { 
                     pl.playerUpdate(350, 500)
+                    var enemyyyPos:Vec2 = boss.enemyPosition()
+                    boss.enemyUpdate(350, enemyyyPos.y.toInt)
                     playerLives -= 1
                     enemyBullDelete ::= b
                   }
