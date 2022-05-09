@@ -67,13 +67,15 @@ object SpaceGameApp extends JFXApp {
           val orangeCloudImg = new Image(orangeCloudImgPath.toString)
           val mountainImgPath = getClass().getResource("/images/Mountain.png")
           val mountainImg = new Image(mountainImgPath.toString)
-          val tempBackImgPath = getClass().getResource("/images/Background5.png")
-          val tempBackImg = new Image(tempBackImgPath.toString)
+          val bossBullImgPath = getClass().getResource("/images/BossBull.png")
+          val bossBullImg = new Image(bossBullImgPath.toString)
+         
+          // Background Fields 
           var backgrndImage = new Background (backImg, new Vec2 (800,800), new Vec2 (0,0), new Vec2 (1,1))
           var pinkBackCloud1 = new Background (pinkCloudImg, new Vec2(750,500), new Vec2 (600, 50), new Vec2 (0.5,0))
-          var orangeBackCloud1 = new Background (orangeCloudImg, new Vec2(650,550), new Vec2 (-100, 10), new Vec2 (0.4,0))
           var pinkBackCloud2 = new Background (pinkCloudImg, new Vec2(750,500), new Vec2 (-50, 50), new Vec2 (0.5,0))
-          var orangeBackCloud2 = new Background (orangeCloudImg, new Vec2(650,550), new Vec2 (700, 10), new Vec2 (0.4,0))
+          var orangeBackCloud1 = new Background (orangeCloudImg, new Vec2(650,550), new Vec2 (-100, 10), new Vec2 (0.3,0))
+          var orangeBackCloud2 = new Background (orangeCloudImg, new Vec2(650,550), new Vec2 (700, 10), new Vec2 (0.3,0))
           var mountain1 = new Background (mountainImg, new Vec2(800,600), new Vec2(0,200), new Vec2 (1, 0))
           var mountain2 = new Background (mountainImg, new Vec2(800,600), new Vec2(-800,200), new Vec2 (1, 0))
 
@@ -97,7 +99,7 @@ object SpaceGameApp extends JFXApp {
           var rewindStack = new LinkedStack[GameState]
           var isReversing = false
           var isBoss = false
-          var boss:Enemy = new Enemy(bossImg, new Vec2 (350,200), bullImg)
+          var boss:Enemy = new Enemy(bossImg, new Vec2 (350,200), bossBullImg)
           var bossLives = 3
           var delay = 0
           var move = false
@@ -162,7 +164,7 @@ object SpaceGameApp extends JFXApp {
                   isBoss = generateBoss()
                   if(isBoss == true) {
                     bossLives = 3
-                    boss = new Enemy(bossImg, new Vec2 (350,200), bullImg)
+                    boss = new Enemy(bossImg, new Vec2 (350,200), bossBullImg)  
                   }
                   isinRangeXX = true
                   isinRangeYY = true 
@@ -193,7 +195,7 @@ object SpaceGameApp extends JFXApp {
                   isBoss = generateBoss()
                   if(isBoss == true) {
                     bossLives = 3
-                    boss = new Enemy(bossImg, new Vec2 (350,200), bullImg)
+                    boss = new Enemy(bossImg, new Vec2 (350,200), bossBullImg)
                   }
                   isinRangeXX = true
                   isinRangeYY = true
@@ -228,7 +230,7 @@ object SpaceGameApp extends JFXApp {
                 isBoss = generateBoss()
                 if(isBoss == true) {
                   bossLives = 3
-                  boss = new Enemy(bossImg, new Vec2 (350,200), bullImg)
+                  boss = new Enemy(bossImg, new Vec2 (350,200), bossBullImg)
                 } 
                 isinRangeXX = true
                 isinRangeYY = true
@@ -310,7 +312,7 @@ object SpaceGameApp extends JFXApp {
                 if(isBoss == true && delay == 1) {
                   if(!bossMoves.isEmpty()) {
                     var bossKey = bossMoves.front()
-                    if(bossKey ==KeyCode.Space) bossBulletToDisplay += new Bullet (bullImg, boss.enemyPosition(), new Vec2 (0, 5))
+                    if(bossKey == KeyCode.Space) bossBulletToDisplay += new Bullet (bossBullImg, boss.enemyPosition(), new Vec2 (0, 5))
                     else if (bossKey == KeyCode.Left) boss.moveLeft()
                     else if (bossKey == KeyCode.Right) boss.moveRight()
                     else if (bossKey == KeyCode.Down) boss.moveDown()
